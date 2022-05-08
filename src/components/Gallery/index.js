@@ -1,33 +1,22 @@
 import React from 'react';
+// this will handle our photos and it will be a child component to this component
+import PhotoList from '../PhotoList';
 // importing helper file
 import { capitalizeFirstLetter } from '../../utils/helpers';
-// this imports our images
-import photo from "../../assets/small/commercial/0.jpg";
+
 
 
 // 'props' passes data foe objects that are used in component
-function Gallery (props) {
-    // categories are being held as objects to assign multiple properties
-    // such as the name and description
-    const currentCategory = {
-        name: "commercial",
-        description:
-          "Photos of grocery stores, food trucks, and other commercial projects",
-      };
+function Gallery ({ currentCategory }) {
+    // name and description is being passed from our currentCategory object
+    const { name, description } = currentCategory;
       return (
         <section>
-            {/* helper is being added to the name comming from object */}
-          <h1>{capitalizeFirstLetter(currentCategory.name)}</h1>
-          <p>{currentCategory.name}</p>
-          <div className="flex-row">
-          {/* the image path is atached to this variable */}
-          <img
-            src={photo}
-            alt="Commercial Example"
-            className="img-thumbnail mx-1"
-          />
-      </div>
-        </section>
+        <h1 data-testid="h1tag">{capitalizeFirstLetter(name)}</h1>
+        <p>{description}</p>
+        {/* we nested the PhotoList component inside of this component and it will handle the images */}
+        <PhotoList  />
+      </section>
       );
 }
 
