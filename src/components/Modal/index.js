@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Modal() {
+function Modal({ onClose, currentPhoto }) {
 
     // we distructured the photo array from PhotoList component
     // to get the info of the current photo
@@ -15,9 +15,8 @@ function Modal() {
                 <p>
                     {description}
                 </p>
-                <button type="button">
-                    Close this modal
-                </button>
+                {/* the value og the prop is being passed down in the params from the Photolist component */}
+                <button onClick={onClose} type="button">Close this modal</button>
             </div>
         </div>
 

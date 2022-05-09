@@ -110,17 +110,20 @@ const PhotoList = ({ category }) => {
   const currentPhotos = photos.filter((photo) => photo.category === category);
 
   // this function will make our modal visible or invalid
-  const toggleModal = (image, i) => { 
+  const toggleModal = (image, i) => {
     // current photo. we use the spread operator
-    setCurrentPhoto({...image, index: i});
+    setCurrentPhoto({ ...image, index: i });
     // this will trigger the conditional statement wraped around the Modal tag
-    setIsModalOpen(true);
+    setIsModalOpen(!isModalOpen);
   }
- 
+
   return (
     <div>
       {/* our Modal component will render here. It will render conditionaly with this short circuit conditional */}
-      {isModalOpen && <Modal currentPhoto={currentPhoto} />}
+      {/* setting the value og toggleModal to true will close the modal which we will pass down this prop in to the Modal component as a param called "onClose"*/}
+      {isModalOpen && (
+        <Modal currentPhoto={currentPhoto} onClose={toggleModal} />
+      )}
       <div className="flex-row">
         {/* this will make image tags out of the maoed photes array that was filtered */}
         {currentPhotos.map((image, i) => (
