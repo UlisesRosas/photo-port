@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Modal from '../Modal';
+// we need this since the modal will render from the photo
+import Modal from '../Modal';
 
 const PhotoList = ({ category }) => {
 
@@ -100,17 +102,35 @@ const PhotoList = ({ category }) => {
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ultricie',
     },
   ]);
-// this filter method only allows photos from the photo array with a specific category to apear 
+  const [currentPhoto, setCurrentPhoto] = useState();
+  // we set it to false because we dint want the modal to open until an imageis clciked
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // this filter method only allows photos from the photo array with a specific category to apear 
   const currentPhotos = photos.filter((photo) => photo.category === category);
 
+  // this function will make our modal visible or invalid
+  const toggleModal = (image, i) => { 
+    // current photo. we use the spread operator
+    setCurrentPhoto({...image, index: i});
+    // this will trigger the conditional statement wraped around the Modal tag
+    setIsModalOpen(true);
+  }
+ 
   return (
     <div>
+      {/* our Modal component will render here. It will render conditionaly with this short circuit conditional */}
+      {isModalOpen && <Modal currentPhoto={currentPhoto} />}
       <div className="flex-row">
+        {/* this will make image tags out of the maoed photes array that was filtered */}
         {currentPhotos.map((image, i) => (
           <img
-            src={require(`../../assets/small/${category}/${i}.jpg`)}
             alt={image.name}
             className="img-thumbnail mx-1"
+            // this function will capture the individual photo
+            // 'image' represents the currents the element in the photo array and 'i' will render the image
+            // these will get passed down as props to be render the modal
+            onClick={() => toggleModal(image, i)}
             key={image.name}
           />
         ))}
